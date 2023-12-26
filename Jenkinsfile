@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     // Log in to Docker registry
-                    withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS_ID', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                         docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_PASS') {
                             def dockerImage = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
                             dockerImage.push()
