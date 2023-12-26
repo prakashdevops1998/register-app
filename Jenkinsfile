@@ -46,21 +46,15 @@ pipeline {
                 }
             }
         }
-       /* stage("Quality Gate") {
-            steps {
-                script {
-                    waitForQualityGate abortPipeline: false , credentialsId: 'Sonar-token'
-                }
-            }
-        }*/
         stage("BUILD & PUSH DOCKER IMAGE") {
             steps {
                 script {
-                    docker.withRegistry('', DOCKER_PASS) {
-                        docker_image = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
-                        docker.withRegistry('https://registry.hub.docker.com', DOCKER_PASS) {
-                            docker_image.push()
-                            docker_image.push("latest")
+                    // Log in to Docker registry
+                    withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS_ID', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        docker.withRegistry('https://registry.hub.docker.com', 'DOCKER_PASS') {
+                            def dockerImage = docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                            dockerImage.push()
+                            dockerImage.push("latest")
                         }
                     }
                 }
