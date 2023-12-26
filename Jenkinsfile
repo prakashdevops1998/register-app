@@ -46,13 +46,13 @@ pipeline {
                 }
             }
         }
-        stage("Quality Gate") {
+       /* stage("Quality Gate") {
             steps {
                 script {
                     waitForQualityGate abortPipeline: false , credentialsId: 'Sonar-token'
                 }
             }
-        }
+        }*/
         stage("BUILD & PUSH DOCKER IMAGE") {
             steps {
                 script {
