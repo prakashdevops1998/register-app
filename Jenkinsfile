@@ -4,7 +4,7 @@ pipeline {
         APP_NAME = "registry-app" // Set your application name here
         RELEASE = "1.0.0"
         DOCKER_USER = "prakashdevops774"
-        DOCKER_PASS = credentials('docker-hub') // Use the correct credentials ID for Docker Hub
+        DOCKER_PASS = 'docker-hub' // Use the correct credentials ID for Docker Hub
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
     }
